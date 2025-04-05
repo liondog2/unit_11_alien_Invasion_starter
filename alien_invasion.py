@@ -30,18 +30,22 @@ class AlienInvasion:
     def run_game(self) -> None:
         # Game Loop
         while self.running:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self.running = False
-                    pygame.quit()
-                    sys.exit()
-            
-            # Draw calls
-            self.screen.blit(self.bg, (0, 0))
-            self.ship.draw()
+            self._check_events()
+            self._update_screen()
 
-            pygame.display.flip()
             self.clock.tick(self.settings.FPS)
+
+    def _update_screen(self) -> None:
+        self.screen.blit(self.bg, (0, 0))
+        self.ship.draw()
+        pygame.display.flip()
+
+    def _check_events(self) -> None:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.running = False
+                pygame.quit()
+                sys.exit()
 
 if __name__ == '__main__':
     ai = AlienInvasion()
