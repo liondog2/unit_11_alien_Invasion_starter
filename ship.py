@@ -47,5 +47,5 @@ class Ship:
         self.arsenal.draw()
         self.screen.blit(self.image, self.rect)
 
-    def fire(self) -> None:
+    def fire(self) -> bool:
         return self.arsenal.fire_bullet()
