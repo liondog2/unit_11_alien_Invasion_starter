@@ -19,8 +19,10 @@ class Settings:
         #     Path.cwd() / 'Assets' / 'sound' / 'fireProjectile1.ogg',
         #     Path.cwd() / 'Assets' / 'sound' / 'fireProjectile2.ogg'
         # }
-
+        
         self.laser_sound = Path.cwd() / 'Assets' / 'sound' / 'fireProjectile1.ogg'
+        self.impact_sound = Path.cwd() / 'Assets' / 'sound' / 'impact1.ogg'
+        
         self.bullet_speed = 8.5
         self.bullet_w = 32
         self.bullet_h = 16
@@ -29,6 +31,6 @@ class Settings:
         self.alien_file = Path.cwd() / 'Assets' / 'images' / 'tank_enemy.png'
         self.alien_w = 128
         self.alien_h = 100
-        self.fleet_speed = 1
+        self.fleet_speed = 25
         self.fleet_direction = 1
         self.fleet_move_speed = self.ship_w
