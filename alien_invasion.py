@@ -68,6 +68,7 @@ class AlienInvasion:
         )
         if collisions:
             self.impact_sound.play()
+            self.impact_sound.fadeout(450)
 
     
     def _reset_level(self) -> None:
