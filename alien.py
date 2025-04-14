@@ -26,6 +26,10 @@ class Alien(Sprite):
         self.y = float(self.rect.y)
 
     def update(self) -> None:
+        """
+        Move the alien on the y axis at temp_speed multiplied by the current
+        direction of the fleet. Update the rect.
+        """
         temp_speed = self.settings.fleet_speed
         
         self.y += temp_speed * self.fleet.fleet_direction
@@ -33,10 +37,22 @@ class Alien(Sprite):
         self.rect.y = self.y
 
     def check_edges(self) -> bool:
+        """
+        Check if the alien has hit an edge of the screen. If the top rect is
+        less than or equal to the top bound of the screen, or the bottom rect is
+        greater than or equal to the bottom bound, this will return true.
+        Otherwise, false.
+
+        Returns:
+            bool: Whether or not the alien is touching a boundary.
+        """
         return (
             self.rect.top <= self.boundaries.top 
             or self.rect.bottom >= self.boundaries.bottom
             )
 
     def draw_alien(self) -> None:
+        """
+        Draw the alien.
+        """
         self.screen.blit(self.image, self.rect)

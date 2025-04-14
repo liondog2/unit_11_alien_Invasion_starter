@@ -1,6 +1,6 @@
 from pathlib import Path
-class Settings:
 
+class Settings:
     def __init__(self):
         self.name: str = 'Alien Invasion'
         self.screen_w = 1820

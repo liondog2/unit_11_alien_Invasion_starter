@@ -16,12 +16,12 @@ class Arsenal:
         self._remove_bullets_offscreen()
     
     def _remove_bullets_offscreen(self) -> None:
-        """For each bullet in an isolated copy of the table, check if the left
-        bound of the bullet rect is greater/equal to the screen width. If so,
-        then it's off the screen and it can be removed from arsenal.
+        """For each bullet in an isolated copy of the table, check if the right
+        bound of the bullet rect is less/equal to zero. If so, then it's off the 
+        screen and it can be removed from arsenal.
         """
         for bullet in self.arsenal.copy():
-            if bullet.rect.left >= self.settings.screen_w:
+            if bullet.rect.right <= 0:
                 self.arsenal.remove(bullet)
 
     def draw(self) -> None:

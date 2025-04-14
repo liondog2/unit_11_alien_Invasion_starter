@@ -11,7 +11,17 @@ from time import sleep
 import random
 
 class AlienInvasion:
+    """
+    Game manager for alien invasion.
 
+    Attributes:
+        settings (Settings): The settings of the game and its' objects.
+        game_stats (GameStats): Manager for the stats of the game as it runs.
+        bg (Surface): The background image.
+        game_active (bool): If the game is currently running.
+        running (bool): If the program is currently open.
+        clock (Clock): Game clock.
+    """
     def __init__(self) -> None:
         pygame.init()
         self.settings = Settings()
@@ -31,6 +41,7 @@ class AlienInvasion:
         # Loop
         self.running = True
         self.clock = pygame.time.Clock()
+        print(type(self.clock))
 
         # Sound mixer
         pygame.mixer.init()
@@ -60,13 +71,16 @@ class AlienInvasion:
             self.clock.tick(self.settings.FPS)
 
     def _check_collisions(self) -> None:
+        """
+        
+        """
         # Check collisions for ship
         if self.ship.check_collisions(self.alien_fleet.fleet):
             self._check_game_status()
             # Subtract one life if possible
             
         # Check collisions for aliens and bottom of screen
-        if self.alien_fleet.check_fleet_left():
+        if self.alien_fleet.check_fleet_right():
             self._check_game_status()
         # Check collisions of projectiles and aliens
         collisions = self.alien_fleet.check_collisions(
@@ -81,6 +95,11 @@ class AlienInvasion:
             sleep(.5)
 
     def _check_game_status(self) -> None:
+        """
+        If the number of ships left is greater than zero, subtract a life and
+        reset the game. Otherwise, end the game by setting self.game_active to
+        false.
+        """
         if self.game_stats.ships_left > 0:
             self.game_stats.ships_left -= 1
             self._reset_level()
@@ -89,11 +108,17 @@ class AlienInvasion:
             self.game_active = False
     
     def _reset_level(self) -> None:
+        """
+        Clear the arsenal. Remove the fleet and create a new one.
+        """
         self.ship.arsenal.arsenal.empty()
         self.alien_fleet.fleet.empty()
         self.alien_fleet.create_fleet()
 
     def _update_screen(self) -> None:
+        """
+        Draw the background, ship, and fleet. Flip the display.
+        """
         self.screen.blit(self.bg, (0, 0))
         self.ship.draw()
         self.alien_fleet.draw()
@@ -111,12 +136,18 @@ class AlienInvasion:
                 self._check_keyup_events(event)
     
     def _check_keyup_events(self, event) -> None:
+        """
+        Change movement state based on key releases
+        """
         if event.key == pygame.K_DOWN or event.key == pygame.K_s:
             self.ship.moving_up = False
         elif event.key == pygame.K_UP or event.key == pygame.K_w:
             self.ship.moving_down = False
 
     def _check_keydown_events(self, event) -> None:
+        """
+        Change movement state and actions based on key presses.
+        """
         if event.key == pygame.K_DOWN or event.key == pygame.K_s:
             self.ship.moving_up = True
         elif event.key == pygame.K_UP or event.key == pygame.K_w:

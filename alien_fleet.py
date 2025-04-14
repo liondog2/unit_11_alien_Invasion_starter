@@ -53,7 +53,8 @@ class AlienFleet:
         fleet_horizontal_space = fleet_w * alien_w
         fleet_vertical_space = fleet_h * alien_h
 
-        x_offset = int(self.settings.screen_w-fleet_horizontal_space)
+        # x_offset = int(self.settings.screen_w-fleet_horizontal_space)
+        x_offset = 0
         y_offset = int((screen_h-fleet_vertical_space)//2)
         return x_offset,y_offset
 
@@ -89,7 +90,7 @@ class AlienFleet:
 
     def _move_alien_fleet(self) -> None:
         for alien in self.fleet:
-            alien.x -= self.settings.fleet_move_speed
+            alien.x += self.settings.fleet_move_speed
 
     def update_fleet(self) -> None:
         self._check_fleet_edges()
@@ -103,10 +104,10 @@ class AlienFleet:
     def check_collisions(self, other_group) -> None:
         return pygame.sprite.groupcollide(self.fleet, other_group, True, True)
     
-    def check_fleet_left(self) -> bool:
+    def check_fleet_right(self) -> bool:
         alien: Alien
         for alien in self.fleet:
-            if alien.rect.left <= 0:
+            if alien.rect.right >= self.settings.screen_w:
                 return True
         return False
     

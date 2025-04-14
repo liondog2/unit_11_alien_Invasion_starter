@@ -6,6 +6,20 @@ if TYPE_CHECKING:
     from alien_invasion import AlienInvasion
 
 class Bullet(Sprite):
+    """
+    A class to manage bullets fired from the player's ship.
+
+    Inherits from:
+        pygame.sprite.Sprite
+    
+    Attributes:
+        screen (Surface): The surface on which the bullet is 
+        drawn.
+        settings (Settings): The game settings.
+        image (Surface): The texture of the bullet.
+        rect (Surface): The position and dimensions of the bullet.
+        x (float): the horizontal position of the bullet on the screen.
+    """
     def __init__(self, game: 'AlienInvasion') -> None:
         super().__init__()
         self.screen = game.screen
@@ -21,8 +35,15 @@ class Bullet(Sprite):
         self.x = float(self.rect.x)
 
     def update(self) -> None:
-        self.x += self.settings.bullet_speed
+        """
+        Move the bullet towards the left of the screen each frame at 
+        bullet_speed. Update the rect.
+        """
+        self.x -= self.settings.bullet_speed
         self.rect.x = self.x
 
     def draw_bullet(self) -> None:
+        """
+        Draw the bullet on the rect surface.
+        """
         self.screen.blit(self.image, self.rect)
