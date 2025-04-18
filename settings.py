@@ -50,6 +50,7 @@ class Settings:
 
         self.fleet_speed = 5
         self.fleet_move_speed = self.ship_w
+        self.alien_points = 50
     
     def increase_difficulty(self) -> None:
         self.ship_speed *= self.difficulty_scale
