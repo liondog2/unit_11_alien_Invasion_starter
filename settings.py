@@ -8,6 +8,8 @@ class Settings:
         self.FPS = 60
         self.difficulty_scale = 1.1
 
+        self.scores_file = Path.cwd() / 'Assets' / 'file' / 'scores.json'
+
         self.bg_file = Path.cwd() / 'Assets' / 'images' / 'background.png'
 
         self.ship_file = Path.cwd() / 'Assets' / 'images' / 'tank_player.png'
