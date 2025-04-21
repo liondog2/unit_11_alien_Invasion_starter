@@ -6,6 +6,15 @@ if TYPE_CHECKING:
     from alien_invasion import AlienInvasion
 
 class AlienFleet:
+    """
+    A class to manage the group of each alien in a fleet.
+    Attributes:
+        fleet (pygame.sprite.Group): The alien fleet.
+        fleet_direction (int): A value to flip the direction in which the fleet
+        moves based on sign.
+        fleet_move_speed (float): The amount at which the fleet advances towards
+        the player every time an alien touches a boundary.
+    """
     def __init__(self, game: 'AlienInvasion') -> None:
         self.game = game
         self.settings = game.settings
@@ -58,7 +67,19 @@ class AlienFleet:
         y_offset = int((screen_h-fleet_vertical_space)//2)
         return x_offset,y_offset
 
-    def calculate_fleet_size(self, alien_w, screen_w, alien_h, screen_h) -> tuple:
+    def calculate_fleet_size(
+        self, alien_w: int, screen_w: int, alien_h: int, screen_h: int
+    ) -> tuple:
+        """
+        Calculate the size of the fleet based on the screen and the size
+        of the enemy sprite.
+        
+        Params:
+            alien_w (int): Width of the alien sprite in pixels.
+            screen_w (int): Width of the screen in pixels.
+            alien_h (int): Height of the alien sprite in pixels.
+            screen_h (int): Height of the screen in pixels.
+        """
         fleet_w = ((screen_w/2)//alien_w)
         fleet_h = (screen_h//alien_h)
         
@@ -76,8 +97,14 @@ class AlienFleet:
         return int(fleet_w), int(fleet_h)
     
     def _create_alien(self, current_x: int, current_y: int) -> None:
-        new_alien = Alien(self, current_x, current_y)
+        """
+        Create a single alien instance.
 
+        Params:
+            current_x (int): The initial x position of the alien.
+            current_y (int):The initial y position of the alien.
+        """
+        new_alien = Alien(self, current_x, current_y)
         self.fleet.add(new_alien)
 
     def _check_fleet_edges(self) -> None:
@@ -97,11 +124,20 @@ class AlienFleet:
         self.fleet.update()
     
     def draw(self) -> None:
+        """
+        Iterate through the fleet and draw each alien.
+        """
         alien: 'Alien'
         for alien in self.fleet:
             alien.draw_alien()
     
-    def check_collisions(self, other_group) -> None:
+    def check_collisions(self, other_group: pygame.sprite.Group) -> dict:
+        """
+        Detect collisions between the bullets and fleet
+
+        Params:
+            other_group (pygame.sprite.Group):
+        """
         return pygame.sprite.groupcollide(self.fleet, other_group, True, True)
     
     def check_fleet_right(self) -> bool:

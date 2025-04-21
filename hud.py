@@ -5,6 +5,16 @@ if TYPE_CHECKING:
     from alien_invasion import AlienInvasion
 
 class HUD:
+    """
+    A manager for the game's HUD with methods to update and draw 
+    elements based on game state.
+
+    game_stats (GameStats): Manager for player data
+
+    Attributes:
+        font (pygame.font.Font): The game font to be used on UI elements.
+        padding (int): The padding in pixels for the UI elements.
+    """
     def __init__(self, game: 'AlienInvasion') -> None:
         self.game = game
         self.settings = game.settings
@@ -29,6 +39,9 @@ class HUD:
         self.life_rect = self.life_image.get_rect()
         
     def update_scores(self) -> None:
+        """
+        Update the hi, max, and current scores.
+        """
         self._update_hi_score()
         self._update_max_score()
         self._update_score()
@@ -71,6 +84,12 @@ class HUD:
         self.level_rect.top = self.life_rect.bottom + self.padding
 
     def _draw_lives(self) -> None:
+        """
+        For each extra life remaining, draw a tank in the corner of the screen
+        representing the lives left. From current_x, add the life icon's rect 
+        and the UI padding together which will give the desired position for the
+        next life image to the right.
+        """
         current_x = self.padding
         current_y = self.padding
         for _ in range(self.game_stats.ships_left):
@@ -78,6 +97,10 @@ class HUD:
             current_x += self.life_rect.width + self.padding
 
     def draw(self) -> None:
+        """
+        Draw the score and level elements and then draw the images representing
+        the remaining lives that the player has.
+        """
         self.screen.blit(self.hi_score_image, self.hi_score_rect)
         self.screen.blit(self.max_score_image, self.max_score_rect)
         self.screen.blit(self.score_image, self.score_rect)

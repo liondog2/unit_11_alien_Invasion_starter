@@ -1,6 +1,17 @@
 from pathlib import Path
 
 class Settings:
+    """
+    A class which manages all game settings, stores file references,
+    and initializes dynamic stats with options to adjust them per level.
+
+    Attributes:
+        FPS (int): The frames per second
+        difficulty_scale (float): The rate at which the game's 
+        difficulty ramps up per level.
+        fleet_direction (int): The sign which will change the direction 
+        of the fleet.
+    """
     def __init__(self):
         self.name: str = 'Alien Invasion'
         self.screen_w = 1820
@@ -42,6 +53,9 @@ class Settings:
         self.font_file = Path.cwd() / 'Assets' / 'Fonts' / 'KeaniaOne' / 'KeaniaOne-Regular.ttf'
 
     def initialize_dynamic_settings(self) -> None:
+        """
+        Initial settings on game startup and when the game is reset.
+        """
         self.ship_speed = 5.5
         self.starting_ship_count = 3
 
@@ -55,6 +69,10 @@ class Settings:
         self.alien_points = 50
     
     def increase_difficulty(self) -> None:
+        """
+        When each level is passed, this method is called to increase the
+        game's difficulty by a multiplier.
+        """
         self.ship_speed *= self.difficulty_scale
         self.bullet_speed *= self.difficulty_scale
         self.fleet_speed *= self.difficulty_scale

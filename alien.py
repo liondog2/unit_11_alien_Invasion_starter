@@ -6,6 +6,17 @@ if TYPE_CHECKING:
     from alien_fleet import AlienFleet
 
 class Alien(Sprite):
+    """
+    A class to manage a single alien unit.
+
+    Params:
+        fleet (AlienFleet): The alien fleet instance which the single alien unit
+        will be added to.
+        x (float): The x position of the alien.
+        y (float): The y position of the alien.
+    Attributes:
+        
+    """
     def __init__(self, fleet: 'AlienFleet', x: float, y: float) -> None:
         super().__init__()
         self.fleet = fleet

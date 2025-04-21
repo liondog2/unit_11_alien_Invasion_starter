@@ -6,6 +6,14 @@ if TYPE_CHECKING:
     from alien_invasion import AlienInvasion
 
 class Arsenal:
+    """
+    A class to manage every bullet fired in the game, checking if any move out
+    of bounds and if the amount on screen is less than the max amount of bullets
+    that can be shot at once.
+
+    Attributes:
+        arsenal (pygame.sprite.Group): The sprite group for each bullet.
+    """
     def __init__(self, game: 'AlienInvasion') -> None:
         self.game = game
         self.settings = game.settings
@@ -31,7 +39,7 @@ class Arsenal:
         for bullet in self.arsenal:
             bullet.draw_bullet()
     
-    def fire_bullet(self) -> None:
+    def fire_bullet(self) -> bool:
         if len(self.arsenal) < self.settings.bullet_amount:
             new_bullet = Bullet(self.game)
             self.arsenal.add(new_bullet)

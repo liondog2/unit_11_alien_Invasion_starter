@@ -14,12 +14,15 @@ import random
 
 class AlienInvasion:
     """
-    Game manager for alien invasion.
+    Base class for the Alien Invasion game, an arcade style game where you have 
+    to take down alien fleets (or in this case, tank battalions), to get as high 
+    of a score as possible before you run out of lives, which levels increase in 
+    difficulty as you play.
 
     Attributes:
         settings (Settings): The settings of the game and its' objects.
-        game_stats (GameStats): Manager for the stats of the game as it runs.
-        bg (Surface): The background image.
+        game_stats (GameStats): Manager for player data
+        bg (pygame.surface.Surface): The background image.
         game_active (bool): If the game is currently running.
         running (bool): If the program is currently open.
         clock (Clock): Game clock.
@@ -75,15 +78,23 @@ class AlienInvasion:
             self.clock.tick(self.settings.FPS)
 
     def _check_collisions(self) -> None:
-        # Check collisions for ship
+        """
+        Check for any collisions with the ship using the 
+        check_collisions() method of the player's ship instance and the
+        check_fleet_right() method of the fleet instance. If either of
+        these have return True, check the game status and subtract a
+        life if possible. Otherwise, end the game.
+
+        Check for collisions between the bullets and fleet. If any
+        bullets collide, update the game scores, play the impact sound,
+        and 
+        """
         if self.ship.check_collisions(self.alien_fleet.fleet):
             self._check_game_status()
-            # Subtract one life if possible
             
-        # Check collisions for aliens and bottom of screen
         if self.alien_fleet.check_fleet_right():
             self._check_game_status()
-        # Check collisions of projectiles and aliens
+        
         collisions = self.alien_fleet.check_collisions(
             self.ship.arsenal.arsenal
         )
@@ -96,7 +107,6 @@ class AlienInvasion:
         if self.alien_fleet.check_destroyed_status():
             self._reset_level()
             self.settings.increase_difficulty()
-            # Update GameStats level
             self.game_stats.update_level()
             self.HUD.update_level()
 
@@ -122,6 +132,10 @@ class AlienInvasion:
         self.alien_fleet.create_fleet()
 
     def restart_game(self) -> None:
+        """
+        Restart the game and its' settings. Recenter the ship and reset
+        the level. Change the game status to active and hide the cursor.
+        """
         self.settings.initialize_dynamic_settings()
         self.game_stats.reset_stats()
         self.HUD.update_scores()
@@ -159,13 +173,22 @@ class AlienInvasion:
                 self._check_button_clicked()
 
     def _check_button_clicked(self) -> None:
+        """
+        Check if the player has clicked the play button and 
+        restart/prepare the game if play_button.check_clicked()
+        returns true.
+        """
         mouse_pos = pygame.mouse.get_pos()
         if self.play_button.check_clicked(mouse_pos):
             self.restart_game()
     
-    def _check_keyup_events(self, event) -> None:
+    def _check_keyup_events(self, event: pygame.event.Event) -> None:
         """
         Change movement state based on key releases
+
+        Params:
+            event (pygame.event.Event): The event to be checked for key release 
+            input.
         """
         if event.key == pygame.K_DOWN or event.key == pygame.K_s:
             self.ship.moving_up = False
@@ -175,6 +198,10 @@ class AlienInvasion:
     def _check_keydown_events(self, event) -> None:
         """
         Change movement state and actions based on key presses.
+
+        Params:
+            event (pygame.event.Event): The event to be checked for key down 
+            input.
         """
         if event.key == pygame.K_DOWN or event.key == pygame.K_s:
             self.ship.moving_up = True

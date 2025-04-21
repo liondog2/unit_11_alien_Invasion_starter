@@ -7,17 +7,17 @@ if TYPE_CHECKING:
 
 class Bullet(Sprite):
     """
-    A class to manage bullets fired from the player's ship.
+    A class to manage a single bullet fired from the player's ship.
 
     Inherits from:
         pygame.sprite.Sprite
     
     Attributes:
-        screen (Surface): The surface on which the bullet is 
+        screen (pygame.surface.Surface): The surface on which the bullet is 
         drawn.
         settings (Settings): The game settings.
-        image (Surface): The texture of the bullet.
-        rect (Surface): The position and dimensions of the bullet.
+        image (pygame.surface.Surface): The texture of the bullet.
+        rect (pygame.surface.Surface): The position and dimensions of the bullet.
         x (float): the horizontal position of the bullet on the screen.
     """
     def __init__(self, game: 'AlienInvasion') -> None:

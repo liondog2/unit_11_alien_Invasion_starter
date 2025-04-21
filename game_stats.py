@@ -8,7 +8,8 @@ if TYPE_CHECKING:
 
 class GameStats():
     """
-    Track the status of the game.
+    A class to track and save the player's stats and high score with 
+    data persistence.
 
     Attributes:
         ships_left (int): The number of ships the player has left.

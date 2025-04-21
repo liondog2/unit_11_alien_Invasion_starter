@@ -6,6 +6,19 @@ if TYPE_CHECKING:
     from arsenal import Arsenal
 
 class Ship:
+    """
+    A class to manage the player's ship.
+
+    Params:
+        game (AlienInvasion): The game instance.
+        arsenal (Arsenal): The arsenal instance which contains all bullets
+        currently being fired or drawn on the game screen.
+    
+    Attributes:
+        game (AlienInvasion): Reference to the base game.
+        settings (Settings): Reference to the settings of the game and its' 
+        objects.
+    """
     def __init__(self, game: 'AlienInvasion', arsenal: 'Arsenal') -> None:
         self.game = game
         self.settings = game.settings
@@ -36,11 +49,18 @@ class Ship:
         self.y = float(self.rect.y)
 
     def update(self) -> None:
-        # Updating the position of the ship
+        """
+        Update the position of the ship, and update the arsenal (bullets).
+        """
         self._update_ship_movement()
         self.arsenal.update_arsenal()
 
     def _update_ship_movement(self) -> None:
+        """
+        Update the y position of the ship based on booleans which determine
+        up/down key inputs. If the player isn't against a boundary, the ship can
+        move higher/lower towards that bound.
+        """
         temp_speed = self.settings.ship_speed
         
         if self.moving_up and self.rect.bottom < self.boundaries.bottom:
@@ -51,6 +71,10 @@ class Ship:
         self.rect.y = self.y
 
     def draw(self) -> None:
+        """
+        Call the method to draw each current bullet in the arsenal. Draw the
+        ship image and rect.
+        """
         self.arsenal.draw()
         self.screen.blit(self.image, self.rect)
 
